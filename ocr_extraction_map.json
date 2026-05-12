@@ -1,0 +1,575 @@
+{
+  "ocr_extraction_map": {
+    "arac_alis_faturasi": {
+      "label": "Araç Alış Faturası",
+      "hedef_tablolar": ["vehicles", "vehicle_purchases", "suppliers"],
+      "fields": {
+        "fatura_bilgileri": {
+          "fatura_no": "string",
+          "fatura_seri": "string",
+          "fatura_tarihi": "date",
+          "fatura_turu": "string — e-fatura / matbaa"
+        },
+        "satici_bilgileri": {
+          "satici_adi_unvan": "string",
+          "satici_tc_vergi_no": "string",
+          "satici_vergi_dairesi": "string",
+          "satici_adres": "string",
+          "satici_telefon": "string",
+          "satici_tipi": "enum — bireysel / galeri / filo / ihale / icra"
+        },
+        "alici_bilgileri": {
+          "alici_adi_unvan": "string",
+          "alici_vergi_no": "string",
+          "alici_vergi_dairesi": "string",
+          "alici_adres": "string"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "sasi_no": "string — 17 karakter VIN",
+          "motor_no": "string",
+          "marka": "string",
+          "model": "string",
+          "model_yili": "int",
+          "renk": "string",
+          "kilometre": "int",
+          "yakit_tipi": "enum — benzin / dizel / lpg / benzin_lpg / hybrid / elektrik",
+          "vites_tipi": "enum — manuel / otomatik / yari_otomatik",
+          "kasa_tipi": "enum — sedan / hatchback / suv / pickup / minivan / coupe / cabrio / panelvan",
+          "motor_hacmi_cc": "int",
+          "beygir_gucu": "int",
+          "tescil_tarihi": "date",
+          "trafige_cikis_tarihi": "date"
+        },
+        "tutar_bilgileri": {
+          "ara_toplam": "decimal",
+          "kdv_orani": "decimal",
+          "kdv_tutari": "decimal",
+          "otv_tutari": "decimal — varsa",
+          "toplam_tutar": "decimal",
+          "para_birimi": "string — TRY / USD / EUR"
+        },
+        "odeme_bilgileri": {
+          "odeme_sekli": "enum — nakit / banka / kredi / takas / takas_ve_nakit",
+          "vade_tarihi": "date",
+          "banka_adi": "string",
+          "iban": "string"
+        }
+      }
+    },
+
+    "arac_satis_faturasi": {
+      "label": "Araç Satış Faturası",
+      "hedef_tablolar": ["vehicle_sales", "customers", "accounts_receivable"],
+      "fields": {
+        "fatura_bilgileri": {
+          "fatura_no": "string",
+          "fatura_seri": "string",
+          "fatura_tarihi": "date"
+        },
+        "alici_bilgileri": {
+          "alici_adi_unvan": "string",
+          "alici_tc_vergi_no": "string",
+          "alici_telefon": "string",
+          "alici_adres": "string",
+          "alici_tipi": "enum — bireysel / kurumsal"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "sasi_no": "string",
+          "marka": "string",
+          "model": "string",
+          "model_yili": "int",
+          "kilometre": "int",
+          "renk": "string"
+        },
+        "tutar_bilgileri": {
+          "ara_toplam": "decimal",
+          "kdv_orani": "decimal",
+          "kdv_tutari": "decimal",
+          "toplam_tutar": "decimal"
+        },
+        "odeme_bilgileri": {
+          "odeme_sekli": "enum — nakit / banka / kredi / takas / takas_ve_nakit / taksit",
+          "nakit_tutar": "decimal",
+          "kredi_banka": "string",
+          "kredi_tutar": "decimal",
+          "takas_arac_plaka": "string",
+          "takas_degeri": "decimal",
+          "taksit_sayisi": "int"
+        },
+        "garanti_bilgileri": {
+          "garanti_verildi_mi": "boolean",
+          "garanti_suresi_ay": "int",
+          "garanti_kapsami": "string"
+        },
+        "satis_danismani": "string"
+      }
+    },
+
+    "boya_kaporta_faturasi": {
+      "label": "Boya / Kaporta Faturası",
+      "hedef_tablolar": ["vehicle_expenses"],
+      "fields": {
+        "fatura_bilgileri": {
+          "fatura_no": "string",
+          "fatura_tarihi": "date"
+        },
+        "isletme_bilgileri": {
+          "isletme_adi": "string",
+          "vergi_no": "string",
+          "telefon": "string"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "marka_model": "string"
+        },
+        "islem_kalemleri": [
+          {
+            "islem_adi": "string — ön tampon boyama, çamurluk düzeltme vb.",
+            "islem_tipi": "enum — boya / kaporta / her_ikisi",
+            "parca_adi": "string",
+            "iscilik_tutari": "decimal",
+            "malzeme_tutari": "decimal",
+            "kalem_toplam": "decimal"
+          }
+        ],
+        "tutar_bilgileri": {
+          "ara_toplam": "decimal",
+          "kdv_orani": "decimal",
+          "kdv_tutari": "decimal",
+          "toplam_tutar": "decimal"
+        },
+        "odeme_sekli": "enum — nakit / banka / kredi_karti"
+      }
+    },
+
+    "yedek_parca_faturasi": {
+      "label": "Yedek Parça Faturası",
+      "hedef_tablolar": ["vehicle_expenses"],
+      "fields": {
+        "fatura_bilgileri": {
+          "fatura_no": "string",
+          "fatura_tarihi": "date"
+        },
+        "tedarikci_bilgileri": {
+          "tedarikci_adi": "string",
+          "vergi_no": "string",
+          "telefon": "string"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "marka_model": "string"
+        },
+        "parca_kalemleri": [
+          {
+            "parca_adi": "string",
+            "oem_no": "string — orijinal parça numarası",
+            "parca_tipi": "enum — orijinal / muadil / cikma",
+            "adet": "int",
+            "birim_fiyat": "decimal",
+            "kalem_toplam": "decimal"
+          }
+        ],
+        "tutar_bilgileri": {
+          "ara_toplam": "decimal",
+          "kdv_orani": "decimal",
+          "kdv_tutari": "decimal",
+          "toplam_tutar": "decimal"
+        },
+        "odeme_sekli": "enum — nakit / banka / kredi_karti"
+      }
+    },
+
+    "mekanik_bakim_faturasi": {
+      "label": "Mekanik / Bakım Faturası",
+      "hedef_tablolar": ["vehicle_expenses"],
+      "fields": {
+        "fatura_bilgileri": {
+          "fatura_no": "string",
+          "fatura_tarihi": "date"
+        },
+        "servis_bilgileri": {
+          "servis_adi": "string",
+          "vergi_no": "string"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "marka_model": "string",
+          "kilometre": "int"
+        },
+        "islem_kalemleri": [
+          {
+            "islem_adi": "string — yağ değişimi, balata, triger seti vb.",
+            "islem_kategorisi": "enum — mekanik / elektrik / fren / suspensiyon / bakim / lastik / aku / cam_far",
+            "iscilik_tutari": "decimal",
+            "malzeme_tutari": "decimal",
+            "kalem_toplam": "decimal"
+          }
+        ],
+        "tutar_bilgileri": {
+          "ara_toplam": "decimal",
+          "kdv_orani": "decimal",
+          "kdv_tutari": "decimal",
+          "toplam_tutar": "decimal"
+        }
+      }
+    },
+
+    "ekspertiz_raporu": {
+      "label": "Ekspertiz Raporu",
+      "hedef_tablolar": ["vehicles"],
+      "fields": {
+        "rapor_bilgileri": {
+          "rapor_no": "string",
+          "rapor_tarihi": "date",
+          "ekspertiz_firmasi": "string"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "sasi_no": "string",
+          "marka": "string",
+          "model": "string",
+          "model_yili": "int",
+          "kilometre": "int",
+          "yakit_tipi": "string",
+          "vites_tipi": "string",
+          "renk": "string"
+        },
+        "panel_durumu": {
+          "tavan": "enum — orijinal / boyali / degisen / hasarli",
+          "kaput": "enum",
+          "bagaj": "enum",
+          "on_tampon": "enum",
+          "arka_tampon": "enum",
+          "sol_on_camurluk": "enum",
+          "sag_on_camurluk": "enum",
+          "sol_on_kapi": "enum",
+          "sag_on_kapi": "enum",
+          "sol_arka_kapi": "enum",
+          "sag_arka_kapi": "enum",
+          "sol_arka_camurluk": "enum",
+          "sag_arka_camurluk": "enum",
+          "sol_marspiyel": "enum",
+          "sag_marspiyel": "enum"
+        },
+        "mekanik_kontrol": {
+          "motor_durumu": "enum — iyi / orta / kotu",
+          "sanziman_durumu": "enum",
+          "fren_durumu": "enum",
+          "suspensiyon_durumu": "enum",
+          "egzoz_emisyon": "enum"
+        },
+        "lastik_durumu": {
+          "sol_on_derin_mm": "decimal",
+          "sag_on_derin_mm": "decimal",
+          "sol_arka_derin_mm": "decimal",
+          "sag_arka_derin_mm": "decimal",
+          "lastik_markasi": "string",
+          "lastik_ebati": "string"
+        },
+        "elektrik_elektronik": {
+          "klima": "enum — calisiyor / calismiyor",
+          "aractan_bilgi_alinabilirlik": "boolean",
+          "abs": "boolean",
+          "airbag": "boolean",
+          "hata_kodu_var_mi": "boolean",
+          "hata_kodlari": "string"
+        },
+        "genel_degerlendirme": {
+          "puan": "decimal — 0-100 arası",
+          "hasar_kaydi_var_mi": "boolean",
+          "tramer_kaydi_tutar": "decimal",
+          "boya_kalinlik_olcumu": "string",
+          "notlar": "string"
+        }
+      }
+    },
+
+    "kira_faturasi": {
+      "label": "Kira Faturası / Dekont",
+      "hedef_tablolar": ["general_expenses"],
+      "fields": {
+        "fatura_bilgileri": {
+          "fatura_no": "string",
+          "fatura_tarihi": "date"
+        },
+        "kiralayan_bilgileri": {
+          "kiralayan_adi": "string",
+          "kiralayan_vergi_tc": "string"
+        },
+        "kira_detay": {
+          "kira_donemi_baslangic": "date",
+          "kira_donemi_bitis": "date",
+          "kira_bedeli": "decimal",
+          "stopaj_orani": "decimal",
+          "stopaj_tutari": "decimal",
+          "kdv_orani": "decimal",
+          "kdv_tutari": "decimal",
+          "toplam_tutar": "decimal",
+          "kira_turu": "enum — isyeri / depo / acik_otopark"
+        }
+      }
+    },
+
+    "enerji_faturasi": {
+      "label": "Elektrik / Su / Doğalgaz Faturası",
+      "hedef_tablolar": ["general_expenses"],
+      "fields": {
+        "fatura_bilgileri": {
+          "fatura_no": "string",
+          "fatura_tarihi": "date",
+          "son_odeme_tarihi": "date"
+        },
+        "abone_bilgileri": {
+          "abone_no": "string",
+          "sayac_no": "string",
+          "abone_adi": "string",
+          "tesisat_adresi": "string"
+        },
+        "tuketim_bilgileri": {
+          "enerji_turu": "enum — elektrik / su / dogalgaz",
+          "donem_baslangic": "date",
+          "donem_bitis": "date",
+          "onceki_endeks": "decimal",
+          "son_endeks": "decimal",
+          "tuketim_miktari": "decimal",
+          "tuketim_birimi": "string — kWh / m³",
+          "birim_fiyat": "decimal"
+        },
+        "tutar_bilgileri": {
+          "enerji_bedeli": "decimal",
+          "dagitim_bedeli": "decimal",
+          "vergi_fon_payi": "decimal",
+          "kdv_tutari": "decimal",
+          "toplam_tutar": "decimal"
+        }
+      }
+    },
+
+    "maas_bordrosu": {
+      "label": "Maaş Bordrosu",
+      "hedef_tablolar": ["payroll_records", "employees"],
+      "fields": {
+        "donem_bilgileri": {
+          "donem_ay": "int",
+          "donem_yil": "int"
+        },
+        "calisan_bilgileri": {
+          "ad_soyad": "string",
+          "tc_no": "string",
+          "pozisyon": "string",
+          "ise_giris_tarihi": "date",
+          "sgk_sicil_no": "string"
+        },
+        "kazanc_bilgileri": {
+          "brut_maas": "decimal",
+          "fazla_mesai_saat": "decimal",
+          "fazla_mesai_tutari": "decimal",
+          "prim_komisyon": "decimal",
+          "ikramiye": "decimal",
+          "yemek_yardimi": "decimal",
+          "ulasim_yardimi": "decimal",
+          "agi_tutari": "decimal",
+          "toplam_kazanc": "decimal"
+        },
+        "kesinti_bilgileri": {
+          "sgk_isci_payi": "decimal — %14",
+          "issizlik_isci_payi": "decimal — %1",
+          "gelir_vergisi": "decimal",
+          "damga_vergisi": "decimal",
+          "sendika_aidati": "decimal",
+          "icra_kesintisi": "decimal",
+          "ozel_saglik_sigortasi": "decimal",
+          "bireysel_emeklilik": "decimal",
+          "diger_kesintiler": "decimal",
+          "toplam_kesinti": "decimal"
+        },
+        "isveren_maliyeti": {
+          "sgk_isveren_payi": "decimal — %20.5",
+          "issizlik_isveren_payi": "decimal — %2",
+          "toplam_isveren_maliyeti": "decimal"
+        },
+        "net_bilgileri": {
+          "net_maas": "decimal",
+          "odeme_tarihi": "date"
+        }
+      }
+    },
+
+    "banka_dekontu": {
+      "label": "Banka Dekontu / Hesap Ekstresi",
+      "hedef_tablolar": ["bank_transactions", "bank_accounts"],
+      "fields": {
+        "hesap_bilgileri": {
+          "banka_adi": "string",
+          "sube_adi": "string",
+          "hesap_no": "string",
+          "iban": "string",
+          "para_birimi": "string"
+        },
+        "islem_bilgileri": {
+          "dekont_no": "string",
+          "islem_tarihi": "date",
+          "valör_tarihi": "date",
+          "islem_turu": "enum — havale / eft / pos / faiz / komisyon / kredi_odeme / vergi_odeme",
+          "islem_yonu": "enum — gelir / gider",
+          "tutar": "decimal",
+          "bakiye_sonrasi": "decimal"
+        },
+        "karsi_taraf": {
+          "karsi_taraf_adi": "string",
+          "karsi_iban": "string",
+          "aciklama": "string",
+          "referans_no": "string"
+        }
+      }
+    },
+
+    "reklam_faturasi": {
+      "label": "Reklam / İlan Faturası",
+      "hedef_tablolar": ["general_expenses"],
+      "fields": {
+        "fatura_bilgileri": {
+          "fatura_no": "string",
+          "fatura_tarihi": "date"
+        },
+        "platform_bilgileri": {
+          "platform_adi": "string — sahibinden.com / arabam.com / instagram / facebook / google_ads / tabela / diger",
+          "firma_adi": "string",
+          "vergi_no": "string"
+        },
+        "hizmet_detay": {
+          "hizmet_adi": "string — vitrin / premium ilan / boost / banner vb.",
+          "donem_baslangic": "date",
+          "donem_bitis": "date",
+          "ilan_adedi": "int",
+          "birim_fiyat": "decimal"
+        },
+        "tutar_bilgileri": {
+          "ara_toplam": "decimal",
+          "kdv_orani": "decimal",
+          "kdv_tutari": "decimal",
+          "toplam_tutar": "decimal"
+        }
+      }
+    },
+
+    "noter_sozlesmesi": {
+      "label": "Noter Satış Sözleşmesi",
+      "hedef_tablolar": ["vehicle_purchases", "vehicle_sales", "vehicles"],
+      "fields": {
+        "noter_bilgileri": {
+          "noter_adi": "string",
+          "yevmiye_no": "string",
+          "islem_tarihi": "date"
+        },
+        "satici_bilgileri": {
+          "satici_adi": "string",
+          "satici_tc": "string"
+        },
+        "alici_bilgileri": {
+          "alici_adi": "string",
+          "alici_tc": "string"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "sasi_no": "string",
+          "motor_no": "string",
+          "marka": "string",
+          "model": "string",
+          "model_yili": "int",
+          "renk": "string",
+          "tescil_no": "string"
+        },
+        "tutar_bilgileri": {
+          "satis_bedeli": "decimal",
+          "noter_harci": "decimal",
+          "toplam_masraf": "decimal"
+        }
+      }
+    },
+
+    "sigorta_policesi": {
+      "label": "Kasko / Trafik Sigortası Poliçesi",
+      "hedef_tablolar": ["vehicle_expenses", "vehicles"],
+      "fields": {
+        "police_bilgileri": {
+          "police_no": "string",
+          "sigorta_sirketi": "string",
+          "acente_adi": "string",
+          "baslangic_tarihi": "date",
+          "bitis_tarihi": "date",
+          "sigorta_turu": "enum — kasko / trafik / imi"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "sasi_no": "string",
+          "marka_model": "string",
+          "model_yili": "int"
+        },
+        "tutar_bilgileri": {
+          "prim_tutari": "decimal",
+          "vergi_tutari": "decimal",
+          "toplam_tutar": "decimal"
+        }
+      }
+    },
+
+    "muayene_belgesi": {
+      "label": "Araç Muayene Belgesi",
+      "hedef_tablolar": ["vehicles", "vehicle_expenses"],
+      "fields": {
+        "muayene_bilgileri": {
+          "muayene_istasyonu": "string",
+          "muayene_tarihi": "date",
+          "sonraki_muayene_tarihi": "date",
+          "sonuc": "enum — gecti / kaldi / sartli_gecti"
+        },
+        "arac_bilgileri": {
+          "plaka": "string",
+          "sasi_no": "string",
+          "marka_model": "string",
+          "model_yili": "int",
+          "kilometre": "int"
+        },
+        "tutar_bilgileri": {
+          "muayene_ucreti": "decimal"
+        },
+        "kontrol_sonuclari": {
+          "fren_testi": "enum — gecti / kaldi",
+          "far_ayari": "enum — gecti / kaldi",
+          "emisyon": "enum — gecti / kaldi",
+          "ses_seviyesi": "enum — gecti / kaldi",
+          "gorunsel_kontrol": "enum — gecti / kaldi",
+          "kusur_listesi": "string"
+        }
+      }
+    },
+
+    "vergi_beyannamesi": {
+      "label": "Vergi Beyannamesi / Tahakkuk",
+      "hedef_tablolar": ["tax_records"],
+      "fields": {
+        "beyan_bilgileri": {
+          "beyanname_turu": "enum — kdv / muhtasar / gecici_vergi / kurumlar / gelir_vergisi",
+          "donem_ay": "int",
+          "donem_yil": "int",
+          "beyan_tarihi": "date"
+        },
+        "mukellef_bilgileri": {
+          "mukellef_adi": "string",
+          "vergi_no": "string",
+          "vergi_dairesi": "string"
+        },
+        "tutar_bilgileri": {
+          "matrah": "decimal",
+          "hesaplanan_vergi": "decimal",
+          "indirimler": "decimal",
+          "odenecek_vergi": "decimal",
+          "son_odeme_tarihi": "date"
+        }
+      }
+    }
+  }
+}
