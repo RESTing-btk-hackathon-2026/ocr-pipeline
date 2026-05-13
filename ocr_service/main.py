@@ -8,7 +8,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
+import uvicorn
 from config import EXTRACTION_MAP, ALLOWED_EXTENSIONS
 import gemini_client
 
@@ -100,5 +100,5 @@ async def extract_with_type(document_type: str, file: UploadFile = File(...)):
 
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)
+    
+    uvicorn.run("main:app", host="127.0.0.1", port=8001, reload=True)
